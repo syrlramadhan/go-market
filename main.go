@@ -16,7 +16,7 @@ func main() {
 
 	db := config.ConnectToDB()
 
-	err := db.AutoMigrate(&model.MstUser{}, &model.MstAddresses{}, &model.MstProducts{})
+	err := db.AutoMigrate(&model.MstUser{}, &model.MstAddresses{}, &model.MstProducts{}, &model.MstProductImages{})
 	if err != nil {
         log.Fatal("Gagal melakukan migrasi:", err)
     }

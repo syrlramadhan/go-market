@@ -5,9 +5,9 @@ import (
 	"gorm.io/gorm"
 )
 
-func GetProductByID(id string, db *gorm.DB) (model.MstProducts, error) {
+func GetProductBySlug(slug string, db *gorm.DB) (model.MstProducts, error) {
 	var product model.MstProducts
-	result := db.Where("id = ?", id).First(&product)
+	result := db.Preload("ProductImages").Where("slug = ?", slug).First(&product)
 
 	if result.Error != nil {
 		return model.MstProducts{}, result.Error
@@ -18,7 +18,7 @@ func GetProductByID(id string, db *gorm.DB) (model.MstProducts, error) {
 
 func GetProduct(db *gorm.DB) ([]model.MstProducts, error) {
 	var product []model.MstProducts
-	result := db.Find(&product)
+	result := db.Preload("ProductImages").Find(&product).Limit(15)
 
 	if result.Error != nil {
 		return []model.MstProducts{}, result.Error

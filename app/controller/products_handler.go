@@ -11,7 +11,7 @@ func HomeHandler(db *gorm.DB) httprouter.Handle {
 	return func(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		products, err := GetProduct(db)
 		if err != nil {
-			http.Error(w, "Product not found", http.StatusNotFound)
+			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 			return
 		}
 
@@ -26,7 +26,7 @@ func ProductHandler(db *gorm.DB) httprouter.Handle {
 	return func(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		products, err := GetProduct(db)
 		if err != nil {
-			http.Error(w, "Product not found", http.StatusNotFound)
+			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 			return
 		}
 
@@ -39,9 +39,9 @@ func ProductHandler(db *gorm.DB) httprouter.Handle {
 
 func ProductDetailHandler(db *gorm.DB) httprouter.Handle {
 	return func(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-		productID := ps.ByName("id")
+		productSlug := ps.ByName("slug")
 
-		product, err := GetProductByID(productID, db)
+		product, err := GetProductBySlug(productSlug, db)
 		if err != nil {
 			http.Error(w, "Product not found", http.StatusNotFound)
 			return
@@ -49,12 +49,12 @@ func ProductDetailHandler(db *gorm.DB) httprouter.Handle {
 
 		products, err := GetProduct(db)
 		if err != nil {
-			http.Error(w, "Product not found", http.StatusNotFound)
+			http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 			return
 		}
 
 		RenderTemplate(w, "product-detail.html", map[string]interface{}{
-			"Title": product.Name+" - GoMarket",
+			"Title": product.Name + " - GoMarket",
 			"Product": product,
 			"Products": products,
 		})		

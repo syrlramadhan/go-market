@@ -7,7 +7,7 @@ type MstUser struct {
 	FirstName       string         `gorm:"size:100;not null"`
 	LastName        string         `gorm:"size:100;"`
 	Email           string         `gorm:"size:255;not null;unique"`
-	Phone           string         `gorm:"size:100;not null;unique"`
+	Phone           string         `gorm:"size:100;unique"`
 	Password        string         `gorm:"size:255;not null"`
 	Address         []MstAddresses `gorm:"foreignKey:UserId"`
 	EmailVeriviedAt time.Time

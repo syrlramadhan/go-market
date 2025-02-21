@@ -3,7 +3,9 @@ module github.com/syrlramadhan/go-market
 go 1.23.2
 
 require (
+	github.com/google/uuid v1.6.0
 	github.com/julienschmidt/httprouter v1.3.0
+	golang.org/x/crypto v0.33.0
 	gorm.io/driver/mysql v1.5.7
 	gorm.io/gorm v1.25.12
 )
