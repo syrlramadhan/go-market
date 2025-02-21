@@ -91,27 +91,26 @@
                 </div>
                 <div class="row">
                     {{ range .Products }}
-                    <div class="col-lg-4 col-md-6 col-12">
-                        <div class="single-product">
-                            <div class="product-img">
-                                <a href="/products/product-detail/{{ .Slug }}">
-                                    {{ if gt (len .ProductImages) 0 }}
-                                    <img src="{{ (index .ProductImages 0).Path }}" class="img-fluid" />
-                                    {{ else }}
-                                    <img src="/default-image.jpg" class="img-fluid" />
-                                    {{ end }}
-                                </a>
-                            </div>
-                            <div class="product-content">
-                                <h3><a href="/products/product-detail/{{ .Slug }}">{{ .Name }}</a></h3>
-                                <div class="product-price">
-                                    <span>IDR {{ .Price }}</span>
+                        <div class="col-lg-4 col-md-6 col-12">
+                            <div class="single-product">
+                                <div class="product-img">
+                                    <a href="/products/product-detail/{{ .Slug }}">
+                                        {{ if gt (len .ProductImages) 0 }}
+                                            <img src="{{ (index .ProductImages 0).Path }}" class="img-fluid" />
+                                        {{ else }}
+                                            <img src="/default-image.jpg" class="img-fluid" />
+                                        {{ end }}
+                                    </a>
+                                </div>
+                                <div class="product-content">
+                                    <h3><a href="/products/product-detail/{{ .Slug }}">{{ .Name }}</a></h3>
+                                    <div class="product-price">
+                                        <span>IDR {{ .Price }}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                     {{ end }}
-
                 </div>
                 <div class="row">
                     <div class="col-12">

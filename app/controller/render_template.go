@@ -17,7 +17,7 @@ func RenderTemplate(writer http.ResponseWriter,tmpl string, data map[string]inte
 
 	err = t.Execute(writer, data)
 	if err != nil {
-		// http.Error(writer, "Failed to execute template", http.StatusInternalServerError)
-		panic(err)
+		http.Error(writer, "Failed to execute template", http.StatusInternalServerError)
+		return
 	}
 }

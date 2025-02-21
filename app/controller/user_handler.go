@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/google/uuid"
@@ -53,16 +52,43 @@ func LoginUserHandler(db *gorm.DB) httprouter.Handle {
 		password := r.FormValue("password")
 
 		user, err := GetUserByEmail(email, db)
-		emailError := fmt.Sprintf("user with email %s not found", email)
 		if err != nil {
-			http.Error(w, emailError, http.StatusInternalServerError)
+			http.Error(w, "Invalid email or password", http.StatusInternalServerError)
 			return
 		}
 
-		if util.ComparePassword(user.Password, password) {
-			http.Redirect(w, r, "/", http.StatusSeeOther)
-		} else {
-			http.Error(w, "incorrect password", http.StatusInternalServerError)
+		if !util.ComparePassword(user.Password, password) {
+			http.Error(w, "Invalid email or password", http.StatusInternalServerError)
 		}
+
+		token, err := util.GenerateJWT(user.FirstName, user.LastName)
+		if err != nil {
+			http.Error(w, "failed to generate token", http.StatusInternalServerError)
+			return
+		}
+
+		http.SetCookie(w, &http.Cookie{
+			Name:     "token",
+			Value:    token,
+			Path:     "/",
+			HttpOnly: true,
+			MaxAge:   600,
+		})
+		
+		http.Redirect(w, r, "/", http.StatusSeeOther)
 	}
+}
+
+func LogoutUserHandler(db *gorm.DB) httprouter.Handle {
+	return func(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+		http.SetCookie(w, &http.Cookie{
+			Name:     "token",
+			Value:    "",
+			Path:     "/",
+			HttpOnly: true,
+			MaxAge:   -1,
+		})
+		http.Redirect(w, r, "/login", http.StatusSeeOther)
+	}
+	
 }

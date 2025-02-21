@@ -43,8 +43,14 @@
                     </div>
                     <div class="col-6 text-right">
                         <ul class="top-links account-links">
-                            <li><i class="fa fa-user-circle-o"></i> <a href="#">My Account</a></li>
-                            <li><i class="fa fa-power-off"></i> <a href="/login">Login</a></li>
+                            <!-- <li><i class="fa fa-user-circle-o"></i> <a href="#">My Account</a></li>
+                            <li><i class="fa fa-power-off"></i> <a href="/login">Login</a></li> -->
+                            {{if .IsAuthenticated}}
+                                <li><i class="fa fa-user-circle-o"></i> <a href="#">My Account</a></li>
+                                <li><i class="fa fa-power-off"></i> <a href="/logout">Logout</a></li>
+                            {{else}}
+                                <li><i class="fa fa-power-off"></i> <a href="/login">Login</a></li>
+                            {{end}}
                         </ul>
                     </div>
                 </div>
@@ -117,7 +123,7 @@
     </header>
 
     {{ template "content" . }}
-    
+
     <footer class="footer bg-primary">
         <div class="footer-top">
             <div class="container">
@@ -126,12 +132,13 @@
                         <!-- Single Widget -->
                         <div class="single-footer about">
                             <div class="logo-footer">
-                                <i class="fa fa-shopping-bag fa-3x"></i> <span class="logo">IndoMarket</span>
+                                <i class="fa fa-shopping-bag fa-3x"></i> <span class="logo">Go Market</span>
                             </div>
                             <p class="text">Praesent dapibus, neque id cursus ucibus, tortor neque egestas augue, magna
                                 eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor,
                                 facilisis luctus, metus.</p>
-                            <p class="call">Got Question? Call us 24/7<span><a href="tel:123456789">+6285341847801</a></span></p>
+                            <p class="call">Got Question? Call us 24/7<span><a
+                                        href="tel:123456789">+6285341847801</a></span></p>
                         </div>
                         <!-- End Single Widget -->
                     </div>
@@ -195,7 +202,7 @@
                     <div class="row">
                         <div class="col-lg-6 col-12">
                             <div class="left">
-                                <p>Copyright © 2021 <a href="http://indokoding.net" target="_blank">IndoKoding.net</a> -
+                                <p>Copyright © 2021 <a href="http://indokoding.net" target="_blank">GoMarket</a> -
                                     All Rights Reserved.</p>
                             </div>
                         </div>
