@@ -18,16 +18,25 @@ func AuthMiddleware(next httprouter.Handle) httprouter.Handle {
 		} else {
 			cookie, err := r.Cookie("token")
 			if err != nil {
-				http.Redirect(w, r, "/login", http.StatusSeeOther)
-				return
+				if r.URL.Path == "/assets/" {
+					http.Error(w, "Unauthorized", http.StatusUnauthorized)
+					return
+				}else {
+					http.Redirect(w, r, "/login", http.StatusSeeOther)
+					return
+				}
 			}
 			token = cookie.Value
 		}
-
 		isValid, err := util.ValidateToken(token)
 		if err != nil || !isValid {
-			http.Redirect(w, r, "/login", http.StatusSeeOther)
-			return
+			if r.URL.Path == "/assets/" {
+				http.Error(w, "Unauthorized", http.StatusUnauthorized)
+				return
+			}else {
+				http.Redirect(w, r, "/login", http.StatusSeeOther)
+				return
+			}
 		}
 
 		next(w, r, p)

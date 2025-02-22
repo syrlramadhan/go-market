@@ -43,14 +43,12 @@
                     </div>
                     <div class="col-6 text-right">
                         <ul class="top-links account-links">
-                            <!-- <li><i class="fa fa-user-circle-o"></i> <a href="#">My Account</a></li>
-                            <li><i class="fa fa-power-off"></i> <a href="/login">Login</a></li> -->
-                            {{if .IsAuthenticated}}
-                                <li><i class="fa fa-user-circle-o"></i> <a href="#">My Account</a></li>
-                                <li><i class="fa fa-power-off"></i> <a href="/logout">Logout</a></li>
-                            {{else}}
-                                <li><i class="fa fa-power-off"></i> <a href="/login">Login</a></li>
-                            {{end}}
+                            {{ if and .IsAuthenticated (ne .Title "Login - GoMarket") }}
+                                <li><a href="#"><i class="fa fa-user-circle-o"></i> My Account</a></li>
+                                <li><a href="/logout"><i class="fa fa-power-off"></i> Logout</a></li>
+                            {{ else if ne .Title "Login - GoMarket" }}
+                                <li><a href="/login"><i class="fa fa-power-off"></i> Login</a></li>
+                            {{ end }}
                         </ul>
                     </div>
                 </div>

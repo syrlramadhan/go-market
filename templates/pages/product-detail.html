@@ -45,7 +45,7 @@
                 <div class="product-detail">
                     <h2 class="product-name">{{ .Product.Name }}</h2>
                     <div class="product-price">
-                        <span class="price">IDR {{ .Product.Price }}</span><span class="price-muted">IDR 499.000</span>
+                        <span class="price">Rp {{ .SelectedPrice }}</span><span class="price-muted">Rp 499.000</span>
                     </div>
                     <div class="product-short-desc">
                         <p>{{ .Product.SortDescription }}
@@ -169,27 +169,27 @@
         </div>
         <div class="row mt-4">
             {{ range $index, $product := .Products }}
-            {{ if lt $index 4 }}
-            <div class="col-xl-3 col-lg-4 col-md-4 col-12">
-                <div class="single-product">
-                    <div class="product-img">
-                        <a href="/products/product-detail/{{ $product.Slug }}">
-                            {{ if gt (len .ProductImages) 0 }}
-                            <img src="{{ (index .ProductImages 0).Path }}" class="img-fluid" />
-                            {{ else }}
-                            <img src="/default-image.jpg" class="img-fluid" />
-                            {{ end }}
-                        </a>
-                    </div>
-                    <div class="product-content">
-                        <h3><a href="/products/product-detail/{{ $product.Slug }}">{{ $product.Name }}</a></h3>
-                        <div class="product-price">
-                            <span>IDR {{ $product.Price }}</span>
+                {{ if lt $index 4 }}
+                    <div class="col-xl-3 col-lg-4 col-md-4 col-12">
+                        <div class="single-product">
+                            <div class="product-img">
+                                <a href="/products/product-detail/{{ $product.Slug }}">
+                                    {{ if gt (len .ProductImages) 0 }}
+                                        <img src="{{ (index $product.ProductImages 0).Path }}" class="img-fluid" />
+                                    {{ else }}
+                                        <img src="/default-image.jpg" class="img-fluid" />
+                                    {{ end }}
+                                </a>
+                            </div>
+                            <div class="product-content">
+                                <h3><a href="/products/product-detail/{{ $product.Slug }}">{{ $product.Name }}</a></h3>
+                                <div class="product-price">
+                                    <span>Rp {{ $product.Price }}</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            {{ end }}
+                {{ end }}
             {{ end }}
         </div>
     </div>
